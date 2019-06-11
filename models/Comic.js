@@ -2,7 +2,7 @@ const cheerio = require("cheerio");
 const axios = require("axios");
 
 let results = [];
-const comics = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles"]
+const comics = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles"];
 
 const today = new Date();
 
@@ -16,11 +16,10 @@ if (day < 10) {
     day = "0" + day;
 };
 
-let date = today.getFullYear() + '/' + month + '/' + day;
+const date = today.getFullYear() + '/' + month + '/' + day;
 
 for (let i = 0; i < comics.length; i++) {
     let comic = comics[i];
-
 
     let url = `https://www.gocomics.com/${comic}/${date}`
 
@@ -41,6 +40,11 @@ for (let i = 0; i < comics.length; i++) {
             });
         })
 
+        setTimeout(() => {
+            console.log(results);
+            
+        }, 500);
+
+        
     });
-    console.log(results);
 }
