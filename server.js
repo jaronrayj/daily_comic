@@ -2,6 +2,10 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const PORT = process.env.PORT || 8000;
 const app = express();
+const mongoose = require("mongoose");
+
+
+mongoose.connect("mongodb://localhost/dailyComic", { useNewUrlParser: true });
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
@@ -17,3 +21,4 @@ app.use(routes);
 app.listen(PORT, function (){
     console.log(`App now listing on localhost:${PORT}`);
 })
+
