@@ -4,8 +4,9 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 const mongoose = require("mongoose");
 
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-mongoose.connect("mongodb://localhost/dailyComic", { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI);
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
