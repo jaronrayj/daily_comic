@@ -25,7 +25,6 @@ function todaysDate() {
 
 router.get("/", function (req, res) {
     let date = todaysDate();
-    console.log("TCL: date", date);
     db.Comic.find({ date: date })
         .then(function (data) {
             if (!data) {
@@ -83,6 +82,16 @@ router.get("/scrape", function (req, res) {
     res.send("Scrape Complete");
 });
 
+router.get("/comic/:id", function (req, res) {
+    const id = req.params.id;
+
+    db.Comic.findById(id)
+        .populate("Note")
+        .then(function (data) {
+            console.log("TCL: data", data);
+            res.render("comment", data)
+        })
+});
 
 
 module.exports = router;

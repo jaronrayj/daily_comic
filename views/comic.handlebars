@@ -1,6 +1,4 @@
-<h1>Daily Comics</h1>
-
-<button id="retrieve">Get Today's Comics</button>
+<button class="btn btn-info" id="retrieve">Get Today's Comics</button>
 
 <h2>
     {{text}}
@@ -9,10 +7,12 @@
 {{#each comic}}
 
 <div class="card">
-    <div class="card-body">
+    <div class="card-body" data-id={{_id}}>
 
         <div class="card-title">
-            {{comic}}
+            <h5>
+                {{comic}}
+            </h5>
         </div>
 
         <img class="card-img-bottom" src={{img}} alt={{comic}}>
@@ -21,3 +21,20 @@
 <br>
 
 {{/each}}
+
+<script>
+    $(document).on("click", "#retrieve", function () {
+        $.get("/scrape", function (data) {
+            setTimeout(function () {
+                location.reload();
+
+            }, 2000);
+
+        })
+    })
+
+    $(document).on("click", ".card-body", function () {
+        const id = $(this).data("id");
+        window.location = `/comic/${id}`
+    })
+</script>

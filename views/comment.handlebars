@@ -1,0 +1,38 @@
+<div id={{_id}} class="card">
+    <div class="card-body">
+
+        <div class="card-title">
+            <h5>
+                {{comic}}
+            </h5>
+        </div>
+
+        <img class="card-img-bottom" src={{img}} alt={{comic}}>
+    </div>
+</div>
+
+{{!-- Comments --}}
+<div>
+    <form id="newNote">
+
+    </form>
+    {{#each Note}}
+        
+    {{/each}}
+</div>
+
+<button class="btn btn-info">Go Back</button>
+
+<script>
+    $(document).on("click", ".btn", function () {
+        window.location = ("/");
+    })
+
+    $(document).on("submit", ".newNote", function (event) {
+        event.preventDefault();
+
+        
+    })
+
+
+</script>
