@@ -1,4 +1,5 @@
 module.exports = {
     Note: require("./Note"),
-    Comic: require("./Comic")
+    Comic: require("./Comic"),
+    Type: require("./Type")
 }

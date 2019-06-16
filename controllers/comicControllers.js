@@ -82,12 +82,51 @@ router.get("/scrape", function (req, res) {
     res.send("Scrape Complete");
 });
 
+router.get("/scrape/types", function (req, res) {
+
+    let url = `https://www.gocomics.com/comics/a-to-z`
+
+
+    axios.get(url).then(function (res) {
+        let $ = cheerio.load(res.data);
+
+
+        $("a.gc-blended-link").each(function (i, element) {
+            let link = $(element).attr("href");
+
+            let splitLink = link.split("/");
+            console.log("TCL: splitLink", splitLink);
+
+            let trueLink = splitLink[1];
+
+            let title = $(element).children().children().children().children().attr("alt");
+
+            let result = {
+                title: title,
+                link: trueLink
+            };
+            console.log("TCL: result", result);
+            db.Type.create(result)
+                .then(function (dbComic) {
+                    console.log(dbComic)
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        });
+
+    });
+
+    res.send("Scrape Complete");
+});
+
 router.get("/comic/:id", function (req, res) {
     const id = req.params.id;
 
     db.Comic.findById(id)
-        .populate("Note")
+        .populate("notes")
         .then(function (data) {
+            console.log("TCL: data", data);
             res.render("comment", data)
         })
 });
