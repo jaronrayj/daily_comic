@@ -88,9 +88,24 @@ router.get("/comic/:id", function (req, res) {
     db.Comic.findById(id)
         .populate("Note")
         .then(function (data) {
-            console.log("TCL: data", data);
             res.render("comment", data)
         })
+});
+
+router.post("/comic/:id/note", function (req, res) {
+
+    let id = req.params.id;
+
+    db.Note.create(req.body)
+        .then(function (dbNote) {
+            return db.Comic.findOneAndUpdate({ _id: id }, { $push: { body: dbNote._id } }, { new: true })
+        })
+        .then(function (dbComic) {
+            res.json(dbComic);
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
 });
 
 
