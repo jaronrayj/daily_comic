@@ -1,0 +1,22 @@
+<div>
+    <ul>
+
+        {{#each types}}
+        <li>
+            {{#if selected}}
+            <input type="checkbox" value={{link}} checked>
+            {{else}}
+            <input type="checkbox" value={{link}}>
+            {{/if}}
+            {{title}}
+        </li>
+        {{/each}}
+    </ul>
+</div>
+
+<script>
+    $(document).on("value", function(){
+
+    localStorage.setItem("lastname", "Smith");
+    })
+</script>

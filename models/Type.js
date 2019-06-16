@@ -11,6 +11,11 @@ const TypeSchema = new Schema ({
     link: {
         type: String,
         requied: true
+    },
+
+    selected: {
+        type: Boolean,
+        default: false
     }
 });
 

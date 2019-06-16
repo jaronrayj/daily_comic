@@ -41,11 +41,26 @@ router.get("/", function (req, res) {
         });
 });
 
+router.get("/selection", function(req,res){
+    db.Type.find()
+        .then(function (data){
+            let types = {
+                types: data,
+                selected: false
+            }
+            res.render("selection", types)
+            console.log("TCL: types", types);
+        })
+        .catch(function( err){
+            console.log(err);
+        })
+})
+
 router.get("/scrape", function (req, res) {
 
     let date = todaysDate();
 
-    const comics = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles"];
+    const comics = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles", "getfuzzy"];
 
     for (let i = 0; i < comics.length; i++) {
         let comic = comics[i];
