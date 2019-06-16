@@ -6,10 +6,10 @@ I wanted a location to read my favorite comics from the good ol' newspaper days.
 
 Tools utilized:
 
-Express
-Handlebars
-Mongoose
-Axios
-Cheerio
+* Express
+* Handlebars
+* Mongoose
+* Axios
+* Cheerio
 
 Enjoy!
