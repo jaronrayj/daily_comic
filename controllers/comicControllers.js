@@ -6,15 +6,7 @@ const cheerio = require("cheerio");
 const axios = require("axios");
 const db = require("../models");
 
-router.get("/", function (req, res) {
-    res.render("comic");
-});
-
-router.get("/scrape", function (req, res) {
-
-    const results = [];
-    const comics = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles"];
-
+function todaysDate() {
     const today = new Date();
 
     let month = today.getMonth() + 1;
@@ -28,13 +20,39 @@ router.get("/scrape", function (req, res) {
     };
 
     let date = today.getFullYear() + '/' + month + '/' + day;
+    return date;
+}
+
+router.get("/", function (req, res) {
+    let date = todaysDate();
+    console.log("TCL: date", date);
+    db.Comic.find({ date: date })
+        .then(function (data) {
+            if (!data) {
+                let hbsObject = {
+                    text: "Go get some comics first!"
+                }
+                res.render("comic", hbsObject);
+            } else {
+                let hbsObject = {
+                    comic: data
+                };
+                res.render("comic", hbsObject);
+            };
+        });
+});
+
+router.get("/scrape", function (req, res) {
+
+    let date = todaysDate();
+
+    const comics = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles"];
 
     for (let i = 0; i < comics.length; i++) {
         let comic = comics[i];
 
         let url = `https://www.gocomics.com/${comic}/${date}`
 
-        console.log("TCL: url", url);
 
         axios.get(url).then(function (res) {
             let $ = cheerio.load(res.data);
@@ -45,31 +63,26 @@ router.get("/scrape", function (req, res) {
 
                 let img = $(element).children().children().attr("src");
 
-                results.push({
+                let result = {
                     comic: comic,
                     img: img,
                     date: date
-                });
-            })
-
-            console.log("TCL: results", results);
-            setTimeout(() => {
-                db.Comic.create(results)
-                .then(function(dbArticle) {
-                    console.log(dbArticle)
-                })
-                .catch(function(err){
-                    console.log(err);
-                });
-            }, 5000);
-
+                };
+                db.Comic.create(result)
+                    .then(function (dbArticle) {
+                        console.log(dbArticle)
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+            });
 
         });
-        res.send("Scrape Complete");
+    };
 
-    }
+    res.send("Scrape Complete");
+});
 
 
-})
 
 module.exports = router;

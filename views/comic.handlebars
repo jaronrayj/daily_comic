@@ -1,8 +1,23 @@
-<h1>Comics</h1>
+<h1>Daily Comics</h1>
 
-{{#each Comic}}
-    
-    
+<button id="retrieve">Get Today's Comics</button>
+
+<h2>
+    {{text}}
+</h2>
+
+{{#each comic}}
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="card-title">
+            {{comic}}
+        </div>
+
+        <img class="card-img-bottom" src={{img}} alt={{comic}}>
+    </div>
+</div>
+<br>
 
 {{/each}}
-
