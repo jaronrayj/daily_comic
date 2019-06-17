@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 const mongoose = require("mongoose");
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/dailyComic";
 
 mongoose.connect(MONGODB_URI);
 
