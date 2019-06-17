@@ -4,9 +4,20 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 const mongoose = require("mongoose");
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/dailyComic";
+const uristring =
+process.env.MONGOLAB_URI ||
+process.env.MONGOHQ_URL ||
+'mongodb://localhost/DailyComics';
 
-mongoose.connect(MONGODB_URI);
+
+mongoose.connect(uristring, function (err, res) {
+    if (err) {
+    console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    } else {
+    console.log ('Succeeded connected to: ' + uristring);
+    }
+  });
+
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
