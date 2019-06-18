@@ -4,9 +4,6 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 const mongoose = require("mongoose");
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
@@ -19,7 +16,12 @@ const routes = require("./controllers/comicControllers.js");
 
 app.use(routes);
 
-app.listen(PORT, function (){
-    console.log(`App now listing on localhost:${PORT}`);
-})
 
+// mongoose.connect("mongodb://localhost/scrapeThis", { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeThis";
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+
+app.listen(PORT, function () {
+  console.log("App running at localhost:" + PORT)
+})
