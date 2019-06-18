@@ -4,20 +4,9 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 const mongoose = require("mongoose");
 
-const uristring =
-process.env.MONGOLAB_URI ||
-process.env.MONGOHQ_URL ||
-'mongodb://localhost/DailyComics';
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-
-mongoose.connect(uristring, function (err, res) {
-    if (err) {
-    console.log ('ERROR connecting to: ' + uristring + '. ' + err);
-    } else {
-    console.log ('Succeeded connected to: ' + uristring);
-    }
-  });
-
+mongoose.connect(MONGODB_URI);
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
