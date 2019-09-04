@@ -12,6 +12,12 @@ app.use(express.json());
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+// if(window.localStorage){
+//   console.log("use it");
+// } else {
+//   console.log("local don't exist");
+// }
+
 const routes = require("./controllers/comicControllers.js");
 
 app.use(routes);

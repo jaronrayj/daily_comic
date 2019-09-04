@@ -6,6 +6,14 @@ const cheerio = require("cheerio");
 const axios = require("axios");
 const db = require("../models");
 
+// window.localStorage.setItem("selection", JSON.stringify());
+
+// let selection = JSON.parse(window.localStorage.getItem("selection"));
+
+// if (selection === null) {
+//     selection = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles", "getfuzzy"];
+// }
+
 function todaysDate() {
     const today = new Date();
 
@@ -44,10 +52,12 @@ router.get("/", function (req, res) {
 
 router.get("/selection", function (req, res) {
 
-    // const selection = localStorage.getItem("selection");
+
 
     db.Type.find()
         .then(function (data) {
+
+
             let types = {
                 types: data,
                 selected: false
@@ -64,10 +74,10 @@ router.get("/scrape", function (req, res) {
 
     let date = todaysDate();
 
-    const comics = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles", "getfuzzy"];
+    let selection = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles", "getfuzzy"];
 
-    for (let i = 0; i < comics.length; i++) {
-        let comic = comics[i];
+    for (let i = 0; i < selection.length; i++) {
+        let comic = selection[i];
 
         let url = `https://www.gocomics.com/${comic}/${date}`
 
