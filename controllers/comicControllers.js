@@ -20,6 +20,7 @@ function todaysDate() {
     };
 
     let date = today.getFullYear() + '/' + month + '/' + day;
+    console.log("TCL: todaysDate -> date", date);
     return date;
 }
 
@@ -41,9 +42,12 @@ router.get("/", function (req, res) {
         });
 });
 
-router.get("/selection", function(req,res){
+router.get("/selection", function (req, res) {
+
+    // const selection = localStorage.getItem("selection");
+
     db.Type.find()
-        .then(function (data){
+        .then(function (data) {
             let types = {
                 types: data,
                 selected: false
@@ -51,7 +55,7 @@ router.get("/selection", function(req,res){
             res.render("selection", types)
             console.log("TCL: types", types);
         })
-        .catch(function( err){
+        .catch(function (err) {
             console.log(err);
         })
 })

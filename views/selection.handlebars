@@ -2,21 +2,47 @@
     <ul>
 
         {{#each types}}
-        <li>
+        <div class="form-check">
             {{#if selected}}
-            <input type="checkbox" value={{link}} checked>
+            <input class="form-check-input" type="checkbox" data-link={{link}} id={{link}} checked>
+            <label class="form-check-label" for={{link}}>
+                {{title}}
+            </label>
             {{else}}
-            <input type="checkbox" value={{link}}>
+            <input class="form-check-input" type="checkbox" data-link={{link}} id={{link}}>
+            <label class="form-check-label" for={{link}}>
+                {{title}}
+            </label>
             {{/if}}
-            {{title}}
-        </li>
+        </div>
         {{/each}}
     </ul>
 </div>
 
 <script>
-    $(document).on("value", function(){
 
-    localStorage.setItem("lastname", "Smith");
+    let selection = JSON.parse(localStorage.getItem("selection"));
+    if (selection === null) {
+        selection = [];
+    }
+
+    $(".form-check-input").on("change", function () {
+
+        let link = $(this).data("link");
+        console.log("TCL: comic", link);
+
+        if (selection.includes(link)) {
+            for (var i = 0; i < selection.length; i++) {
+                if (selection[i] === link) {
+                    selection.splice(i, 1);
+                }
+            }
+        } else {
+            selection.push(link);
+        }
+
+        console.log("TCL: selection", selection);
+
+        localStorage.setItem("selection", JSON.stringify(selection));
     })
 </script>
