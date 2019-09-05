@@ -28,7 +28,6 @@ function todaysDate() {
     };
 
     let date = today.getFullYear() + '/' + month + '/' + day;
-    console.log("TCL: todaysDate -> date", date);
     return date;
 }
 
@@ -59,11 +58,9 @@ router.get("/selection", function (req, res) {
 
 
             let types = {
-                types: data,
-                selected: false
+                types: data
             }
             res.render("selection", types)
-            console.log("TCL: types", types);
         })
         .catch(function (err) {
             console.log(err);
@@ -124,7 +121,6 @@ router.get("/scrape/types", function (req, res) {
             let link = $(element).attr("href");
 
             let splitLink = link.split("/");
-            console.log("TCL: splitLink", splitLink);
 
             let trueLink = splitLink[1];
 
@@ -134,7 +130,6 @@ router.get("/scrape/types", function (req, res) {
                 title: title,
                 link: trueLink
             };
-            console.log("TCL: result", result);
             db.Type.create(result)
                 .then(function (dbComic) {
                     console.log(dbComic)
@@ -155,7 +150,6 @@ router.get("/comic/:id", function (req, res) {
     db.Comic.findById(id)
         .populate("notes")
         .then(function (data) {
-            console.log("TCL: data", data);
             res.render("comment", data)
         })
 });
@@ -175,6 +169,21 @@ router.post("/comic/:id/note", function (req, res) {
             res.json(err);
         });
 });
+
+// Retrieve User and create new user
+
+// router.post("user/:id", function (req,res){
+//     let id = req.params.id
+
+//     db.User.create(req.body)
+
+//         })
+// })
+
+// router.get("user/:id", function (req,res){
+//     let id = req.params.id
+
+// })
 
 
 module.exports = router;

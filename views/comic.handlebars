@@ -1,4 +1,3 @@
-
 <h2>
     {{text}}
 </h2>
@@ -14,7 +13,7 @@
             </h5>
         </div>
 
-        <img class="card-img-bottom images"  src={{img}} alt={{comic}}>
+        <img class="card-img-bottom images" src={{img}} alt={{comic}}>
     </div>
 </div>
 <br>
@@ -24,16 +23,28 @@
 <button class="btn btn-info" id="retrieve">Get Today's Comics</button>
 
 <script>
+
+    function loading(button) {
+        const newDiv = $("<div>").addClass("spinner-border text-primary spinner")
+        const newSpan = $("<span>").addClass("sr-only").text("Loading...")
+        newDiv.append(newSpan)
+
+        $(button).replaceWith(newDiv)
+    }
+
     let selection = localStorage.getItem("selection");
 
-    $(document).on("click", "#retrieve", function () {
-        $.get("/scrape", function (data) {
-            setTimeout(function () {
-                location.reload();
 
-            }, 2000);
+    $(document).on("click", "#retrieve", function () {
+        loading("#retrieve")
+
+        fetch("/scrape", function (data) {
 
         })
+        setTimeout(function () {
+            location.reload();
+
+        }, 3000);
     })
 
     $(document).on("click", ".card-body", function () {

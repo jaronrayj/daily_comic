@@ -1,15 +1,29 @@
+{{!-- Todo have user put in name and then have a "save" button for the current selection, send to Mongo with information --}}
+
+<form>
+    <label for="Username">Pull up your account (case sensitive)</label>
+    <div class="input-group mb-3">
+        <input type="text" name="Username" class="form-control" placeholder="Username" aria-label="Username"
+            aria-describedby="basic-addon1">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">Submit</button>
+        </div>
+    </div>
+</form>
+
 <div class="row">
     <div class="col-md-6">
         <ul>
             {{#each types}}
             <div class="form-check">
                 {{#if selected}}
-                <input class="form-check-input" type="checkbox" data-link={{link}} id={{link}} checked>
+                <input class="form-check-input" type="checkbox" data-link={{link}} data-title="{{title}}" id={{link}}
+                    checked>
                 <label class="form-check-label" for={{link}}>
                     {{title}}
                 </label>
                 {{else}}
-                <input class="form-check-input" type="checkbox" data-link={{link}} id={{link}}>
+                <input class="form-check-input" type="checkbox" data-link={{link}} data-title="{{title}}" id={{link}}>
                 <label class="form-check-label" for={{link}}>
                     {{title}}
                 </label>
@@ -19,7 +33,7 @@
         </ul>
     </div>
     <div class="col-md-6">
-        <div class="float">
+        <div class="selectionBox">
             Current Selection
             <div class="display"></div>
         </div>
@@ -28,16 +42,23 @@
 
 <script>
 
+    
+
     let selection = JSON.parse(localStorage.getItem("selection"));
     if (selection === null) {
         selection = [];
     }
+    let titles = JSON.parse(localStorage.getItem("titles"));
+    if (titles === null) {
+        titles = [];
+    }
 
-    $(".display").text(JSON.stringify(selection))
+    $(".display").text(titles)
 
     $(".form-check-input").on("change", function () {
 
         let link = $(this).data("link");
+        let title = $(this).data("title");
 
         if (selection.includes(link)) {
             for (var i = 0; i < selection.length; i++) {
@@ -48,10 +69,20 @@
         } else {
             selection.push(link);
         }
+        if (titles.includes(title)) {
+            for (var i = 0; i < titles.length; i++) {
+                if (titles[i] === title) {
+                    titles.splice(i, 1);
+                }
+            }
+        } else {
+            titles.push(title);
+        }
 
-        $(".display").text(JSON.stringify(selection))
+        $(".display").text(titles)
 
 
+        localStorage.setItem("titles", JSON.stringify(titles));
         localStorage.setItem("selection", JSON.stringify(selection));
     })
 </script>
