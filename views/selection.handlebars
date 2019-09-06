@@ -11,24 +11,32 @@
     </div>
 </form>
 
+{{!-- Set up filter from this site: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list --}}
+
+<h2>My Phonebook</h2>
+
+<input type="text" id="myInput" onkeyup="filterList()" placeholder="Search for a comic" title="Type in a comic">
+
 <div class="row">
     <div class="col-md-6">
-        <ul>
+        <ul id="selectionList">
             {{#each types}}
-            <div class="form-check">
-                {{#if selected}}
+            {{#if selected}}
+            <li>
                 <input class="form-check-input" type="checkbox" data-link={{link}} data-title="{{title}}" id={{link}}
                     checked>
                 <label class="form-check-label" for={{link}}>
                     {{title}}
                 </label>
-                {{else}}
+            </li>
+            {{else}}
+            <li>
                 <input class="form-check-input" type="checkbox" data-link={{link}} data-title="{{title}}" id={{link}}>
                 <label class="form-check-label" for={{link}}>
                     {{title}}
                 </label>
-                {{/if}}
-            </div>
+            </li>
+            {{/if}}
             {{/each}}
         </ul>
     </div>
@@ -36,13 +44,14 @@
         <div class="selectionBox">
             Current Selection
             <div class="display"></div>
+            <button type="button" class="btn btn-secondary" id="comicSubmit">Show Comics</button>
         </div>
     </div>
 </div>
 
 <script>
 
-    
+
 
     let selection = JSON.parse(localStorage.getItem("selection"));
     if (selection === null) {
@@ -85,4 +94,21 @@
         localStorage.setItem("titles", JSON.stringify(titles));
         localStorage.setItem("selection", JSON.stringify(selection));
     })
+
+    function filterList() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("selectionList");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("label")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
 </script>
