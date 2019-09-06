@@ -53,7 +53,7 @@ router.get("/selection", function (req, res) {
 
 
 
-    db.Type.find()
+    db.Type.find().sort([['title', 'ascending']])
         .then(function (data) {
 
 
