@@ -24,6 +24,9 @@
 
 <script>
 
+    // Retrieve the user selection 
+
+
     function loading(button) {
         const newDiv = $("<div>").addClass("spinner-border text-primary spinner")
         const newSpan = $("<span>").addClass("sr-only").text("Loading...")
@@ -38,8 +41,9 @@
     $(document).on("click", "#retrieve", function () {
         loading("#retrieve")
 
-        fetch("/scrape", function (data) {
 
+        fetch("/scrape", function (data) {
+            
         })
         setTimeout(function () {
             location.reload();

@@ -1,6 +1,6 @@
 {{!-- Todo have user put in name and then have a "save" button for the current selection, send to Mongo with information --}}
 
-<form>
+{{!-- <form>
     <label for="Username">Pull up your account (case sensitive)</label>
     <div class="input-group mb-3">
         <input type="text" name="Username" class="form-control" placeholder="Username" aria-label="Username"
@@ -9,11 +9,9 @@
             <button class="btn btn-outline-secondary" type="button">Submit</button>
         </div>
     </div>
-</form>
+</form> --}}
 
-{{!-- Set up filter from this site: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list --}}
-
-<h2>My Phonebook</h2>
+<h3>Comics Selection</h3>
 
 <input type="text" id="myInput" onkeyup="filterList()" placeholder="Search for a comic" title="Type in a comic">
 
@@ -41,12 +39,15 @@
         </ul>
     </div>
     <div class="col-md-6">
-        <div class="selectionBox">
-            Current Selection
-            <div class="display"></div>
-            <button type="button" class="btn btn-secondary" id="comicSubmit">Show Comics</button>
+        <div class="card selectionBox">
+            <div class="card-body">
+                <h5 class="card-title">Current Selection</h5>
+                <p class="display card-text"></p>
+                <button class="btn btn-primary">Show Comics</button>
+            </div>
         </div>
     </div>
+</div>
 </div>
 
 <script>

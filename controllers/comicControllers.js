@@ -6,14 +6,6 @@ const cheerio = require("cheerio");
 const axios = require("axios");
 const db = require("../models");
 
-// window.localStorage.setItem("selection", JSON.stringify());
-
-// let selection = JSON.parse(window.localStorage.getItem("selection"));
-
-// if (selection === null) {
-//     selection = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles", "getfuzzy"];
-// }
-
 function todaysDate() {
     const today = new Date();
 
@@ -71,13 +63,16 @@ router.get("/scrape", function (req, res) {
 
     let date = todaysDate();
 
-    let selection = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles", "getfuzzy"];
+    let selection = req.body
+
+    if (req.body === null) {
+        selection = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles", "getfuzzy"];
+    }
 
     for (let i = 0; i < selection.length; i++) {
         let comic = selection[i];
 
         let url = `https://www.gocomics.com/${comic}/${date}`
-
 
         axios.get(url).then(function (res) {
             let $ = cheerio.load(res.data);
