@@ -63,9 +63,10 @@ router.get("/scrape", function (req, res) {
 
     let date = todaysDate();
 
-    let selection = req.body
+    let selection = req.params.selection
+    console.log("TCL: selection", selection);
 
-    if (req.body === null) {
+    if (req.params.selection === undefined) {
         selection = ["calvinandhobbes", "wallace-the-brave", "the-awkward-yeti", "pearlsbeforeswine", "how-to-cat", "closetohome", "culdesac", "deflocked", "dilbert-classics", "fminus", "lio", "herman", "poochcafe", "sweet-and-sour-pork", "sarahs-scribbles", "getfuzzy"];
     }
 
